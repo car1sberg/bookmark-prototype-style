@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
      ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
     '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
@@ -28,3 +29,7 @@ The Cloud9 IDE team
 
 Visit http://docs.c9.io for support, or to learn more about using Cloud9 IDE. 
 To watch some training videos, visit http://www.youtube.com/user/c9ide
+=======
+# BookyManager
+
+>>>>>>> 82ed0e6e78bb6e6600883fc1ac72e84f2e62a774
