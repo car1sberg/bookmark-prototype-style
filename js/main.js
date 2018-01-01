@@ -159,13 +159,10 @@ function onAddNewBookmark() {
     let link = linkElem.value;
     let description = descriptionElem.value;
 
-    if (name.length === 0 || link.length === 0){
-        console.log('error');
-    }
-    else {
+    if (!name.length === 0 && !link.length === 0) {
         myData.push({id: myData.length.toString(), name: name, link: link, description: description});
-        getBookmarksList();
     }
+    getBookmarksList();
 }
 
 

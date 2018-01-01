@@ -73,6 +73,8 @@ function initListener() {
         const name = nameCategoryElm.value;
         categoryForm.classList.remove('in');
 
+        nameCategoryElm.value = "";
+
         listCategories.push({name: name, id: listCategories.length +1});
         refreshCategories();
     })
@@ -92,10 +94,6 @@ function deleteCategory(id) {
             if (confirmStatus){
                 listCategories.splice(i, 1);
             }
-            else {
-                return null;
-            }
-
         }
     }
     refreshCategories();
