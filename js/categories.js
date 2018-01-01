@@ -46,23 +46,19 @@ function addCategoryForm() {
             <form id="addCategory" class="collapse">
                 <div class="form-group">
                     <label for="addCategoryName">Category Name</label>
-                    <input id="addCategoryName" type="text" class="form-control" name="nameCategory">
+                    <input id="addCategoryName" type="text" class="form-control" name="nameCategory" required>
                 </div>
-                <button class="btn btn-primary saveCategory" type="button">Save</button>
+                <button class="btn btn-primary saveCategory" type="submit">Save</button>
                 <button class="btn btn-danger cancelCategory" type="button" data-toggle="collapse" data-target="#addCategory">Cancel</button>
             </form>`;
 }
 
-function add(category) {
-    let obj = Object.assign({}, category, {id: listCategories.length + 1});
-
-    listCategories.push(obj);
-    let inp = document.querySelector('#addCategory').querySelector('input[name="nameCategory"]');
-    inp = inp.value;
-
-    inp = "";
-    return obj;
-}
+// function add(category) {
+//     let obj = Object.assign({}, category, {id: listCategories.length + 1});
+//
+//     listCategories.push(obj);
+//     return obj;
+// }
 
 function initListener() {
     const addCategoryBtn = document.getElementsByClassName('saveCategory')[0];
