@@ -81,22 +81,22 @@ function addBookmarkForm() {
                             <form id="addBookmarkForm">
                                 <div class="form-group cancelForm">
                                     <label for="BkmName">Bookmark Name</label>
-                                    <input id="BkmName" type="text" class="form-control addBookmarkName">
+                                    <input id="BkmName" type="text" class="form-control addBookmarkName" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="BkmLink">Bookmark Link</label>
-                                    <input id="BkmLink" type="text" class="form-control addBookmarkLink">
+                                    <input id="BkmLink" type="text" class="form-control addBookmarkLink" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="Descr">The Description</label>
                                     <textarea id="Descr" type="text" class="form-control addBookmarkDescription"></textarea>
                                 </div>
+                                <div class="modal-footer button-holder">
+                                    <button class="btn btn-primary saveBookmark" onclick="onAddNewBookmark()" type="submit">Save</button>
+                                    <button class="btn btn-danger cancelCreatingBookmark" data-dismiss="modal">Cancel</button>
+                                </div>
                             </form>
                         </div>
-                    </div>
-                    <div class="modal-footer button-holder">
-                        <button class="btn btn-primary saveBookmark" onclick="onAddNewBookmark()">Save</button>
-                        <button class="btn btn-danger cancelCreatingBookmark" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -159,8 +159,13 @@ function onAddNewBookmark() {
     let link = linkElem.value;
     let description = descriptionElem.value;
 
-    myData.push({id: myData.length.toString(), name: name, link: link, description: description});
-    getBookmarksList();
+    if (name.length === 0 || link.length === 0){
+        console.log('error');
+    }
+    else {
+        myData.push({id: myData.length.toString(), name: name, link: link, description: description});
+        getBookmarksList();
+    }
 }
 
 
@@ -196,6 +201,12 @@ function onDeleteBookmark(id) {
 збільшити кнопку додавання і в формі апдейта і кенсел +
 сейв і кенсел по половині ширини +
 додати дескріпшн +
+
+
+при збереженні букмарка забирати вікно
+кнопку
+
+підтвердження видалення
  */
 
 

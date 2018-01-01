@@ -64,16 +64,6 @@ function add(category) {
     return obj;
 }
 
-function remove(id) {
-    let current = listCategories;
-
-    for (let i = 0; i < current.length; i++) {
-        if (current[i].id === id)
-            current.splice(i, 1);
-    }
-    refreshCategories();
-}
-
 function initListener() {
     const addCategoryBtn = document.getElementsByClassName('saveCategory')[0];
 
@@ -94,9 +84,18 @@ function refreshCategories() {
 
 // Deleting a category
 function deleteCategory(id) {
+    let confirmStatus;
+
     for (let i = 0; i < listCategories.length; i++) {
         if (listCategories[i].id === id) {
-            listCategories.splice(i, 1);
+            confirmStatus = confirm('It will delete the category, including all its bookmarks.');
+            if (confirmStatus){
+                listCategories.splice(i, 1);
+            }
+            else {
+                return null;
+            }
+
         }
     }
     refreshCategories();
