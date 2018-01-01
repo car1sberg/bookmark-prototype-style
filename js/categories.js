@@ -1,12 +1,14 @@
 (function () {
     $(document).ready(function () {
+        document.getElementById('categoryForm').innerHTML = addCategoryForm();
         initListener();
         refreshCategories();
+
     });
 } ());
 
 
-let listCategories = [
+const listCategories = [
     {
         "id": 1,
         "name": "Favorite"
@@ -28,21 +30,28 @@ let listCategories = [
     }
 ];
 
-
-function addCategoryForm() {
-    return `<button class="btn btn-primary" id="addCategoryBtn" data-toggle="collapse" data-target="#addCategory">Add Category</button>
-                <form id="addCategory" class="collapse">
-                    <div class="form-group">
-                        <label for="addCategoryName">Category Name</label>
-                        <input id="addCategoryName" type="text" class="form-control" name="nameCategory">
-                    </div>
-                    <button class="btn btn-primary saveCategory" type="button">Save</button>
-                    <button class="btn btn-danger cancelCategory" type="button" data-toggle="collapse" data-target="#addCategory">Cancel</button>
-                </form>
-    `
+// GENERATING TEMPLATE FOR CATEGORIES
+function generateCategoryTemplate(category) {
+    return `<button type="button" class="list-group-item" attr-id="${category.id}">
+        ${category.name}
+        <a>
+            <span id="categoryID" class="glyphicon glyphicon-remove close" onclick="deleteCategory(${category.id})"></span>
+        </a>
+    </button>`;
 }
 
-document.getElementById('categoryForm').innerHTML = addCategoryForm();
+    // Adding Form
+function addCategoryForm() {
+    return `<button class="btn btn-primary" id="addCategoryBtn" data-toggle="collapse" data-target="#addCategory">Add Category</button>
+            <form id="addCategory" class="collapse">
+                <div class="form-group">
+                    <label for="addCategoryName">Category Name</label>
+                    <input id="addCategoryName" type="text" class="form-control" name="nameCategory">
+                </div>
+                <button class="btn btn-primary saveCategory" type="button">Save</button>
+                <button class="btn btn-danger cancelCategory" type="button" data-toggle="collapse" data-target="#addCategory">Cancel</button>
+            </form>`;
+}
 
 function add(category) {
     let obj = Object.assign({}, category, {id: listCategories.length + 1});
@@ -65,22 +74,16 @@ function remove(id) {
     refreshCategories();
 }
 
-    // GENERATION TEMPLATE
-function generateCategoryTemplate(category) {
-    return `<button type="button" class="list-group-item" attr-id="${category.id}">
-        ${category.name}<a><span id="categoryID" class="glyphicon glyphicon-remove close" onclick="deleteCategory(${category.id})"></span></a>
-            </button>`
-}
-
-
 function initListener() {
-    let addCategoryBtn = document.getElementsByClassName('saveCategory')[0];
+    const addCategoryBtn = document.getElementsByClassName('saveCategory')[0];
+
     addCategoryBtn.addEventListener('click', function (elem) {
-        let name = document.querySelector('#addCategory').querySelector('input[name="nameCategory"]');
-        name = name.value;
-        let addCategoryForm = document.querySelector('#addCategory');
-        addCategoryForm.classList.remove('in');
-        listCategories.push({name: name});
+        const categoryForm= document.querySelector('#addCategory');
+        const nameCategoryElm = categoryForm.querySelector('input[name="nameCategory"]');
+        const name = nameCategoryElm.value;
+        categoryForm.classList.remove('in');
+
+        listCategories.push({name: name, id: listCategories.length +1});
         refreshCategories();
     })
 }

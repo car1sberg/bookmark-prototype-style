@@ -26,6 +26,16 @@ let myData = [
         "description": "I love it"
     }
 ];
+// let myData = [];
+
+// Add a list
+$(document).ready(function () {
+    // $.get('app/bookmarks.php', function (data) {
+    //    console.log(data);
+    //     myData = data;
+    // });
+    getBookmarksList();
+});
 
 
 
@@ -157,11 +167,6 @@ function onAddNewBookmark() {
 function getBookmarksList() {
     document.getElementById('bookmarkList').innerHTML = myData.map(item => generateTemplateItem(item)).join('');
 }
-
-    // Add a list
-$(document).ready(function () {
-    getBookmarksList();
-});
 
 
     // Deleting a bookmark
