@@ -81,21 +81,21 @@ function addBookmarkForm() {
                             <form id="addBookmarkForm">
                                 <div class="form-group cancelForm">
                                     <label for="BkmName">Bookmark Name</label>
-                                    <input id="BkmName" type="text" class="form-control addBookmarkName" required>
+                                    <input id="BkmName" type="text" class="form-control addBookmarkName" placeholder="required">
                                 </div>
                                 <div class="form-group">
                                     <label for="BkmLink">Bookmark Link</label>
-                                    <input id="BkmLink" type="text" class="form-control addBookmarkLink" required>
+                                    <input id="BkmLink" type="text" class="form-control addBookmarkLink" placeholder="required">
                                 </div>
                                 <div class="form-group">
                                     <label for="Descr">The Description</label>
                                     <textarea id="Descr" type="text" class="form-control addBookmarkDescription"></textarea>
                                 </div>
-                                <div class="modal-footer button-holder">
-                                    <button class="btn btn-primary saveBookmark" onclick="onAddNewBookmark()" type="submit">Save</button>
-                                    <button class="btn btn-danger cancelCreatingBookmark" data-dismiss="modal">Cancel</button>
-                                </div>
                             </form>
+                            <div class="modal-footer button-holder">
+                                    <button class="btn btn-primary saveBookmark" onclick="onAddNewBookmark()" type="button">Save</button>
+                                    <button class="btn btn-danger cancelCreatingBookmark" data-dismiss="modal">Cancel</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,6 +148,9 @@ function switchToUpdate() {
     }
 }
 
+function hideModal() {
+    $('#myModal').modal('hide');
+}
 
     // Add a Bookmark
 function onAddNewBookmark() {
@@ -159,7 +162,14 @@ function onAddNewBookmark() {
     let link = linkElem.value;
     let description = descriptionElem.value;
 
-    if (!name.length === 0 && !link.length === 0) {
+    if (name.length === 0) {
+        alert('Enter a bookmark name');
+    }
+    else if (link.length === 0) {
+        alert('Enter a bookmark link');
+    }
+    else {
+        hideModal();
         myData.push({id: myData.length.toString(), name: name, link: link, description: description});
     }
     getBookmarksList();
@@ -182,28 +192,9 @@ function onDeleteBookmark(id) {
     getBookmarksList();
 }
 
-/*
-Додати спливаюче вікно з полями для додавання букмарки +
-функції з дом елем вгорі, інші внизу  +
-уникнути дублікату +
-додати функцію для генерації масиву +
-додати поле дескріпшн +
-Доробити лінк ксс +-
-пофіксив баг з видаленням нових букмарок +
-при додаванні зникає форма +
-додав плейсхолдери +
-верстка кнопок і верстка полів +
+//   TODO: there is a bug with a long category name;
+//   TODO: issue with gaps in input fields; / tried to fix it, but the page is reloading now after accepting alert window.
+//   TODO: max 15 symbols for the category name and ~25 for the bookmark name
 
-
-збільшити кнопку додавання і в формі апдейта і кенсел +
-сейв і кенсел по половині ширини +
-додати дескріпшн +
-
-
-при збереженні букмарка забирати вікно
-кнопку
-
-підтвердження видалення
- */
 
 

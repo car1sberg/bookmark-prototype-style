@@ -53,13 +53,6 @@ function addCategoryForm() {
             </form>`;
 }
 
-// function add(category) {
-//     let obj = Object.assign({}, category, {id: listCategories.length + 1});
-//
-//     listCategories.push(obj);
-//     return obj;
-// }
-
 function initListener() {
     const addCategoryBtn = document.getElementsByClassName('saveCategory')[0];
 
@@ -67,11 +60,19 @@ function initListener() {
         const categoryForm= document.querySelector('#addCategory');
         const nameCategoryElm = categoryForm.querySelector('input[name="nameCategory"]');
         const name = nameCategoryElm.value;
-        categoryForm.classList.remove('in');
+        const inputValue = nameCategoryElm.value;
+        const newValue = inputValue.trim();
 
-        nameCategoryElm.value = "";
+        if (newValue.length === 0){
+            alert('Enter a category name');
+        }
+        else {
+            categoryForm.classList.remove('in');
 
-        listCategories.push({name: name, id: listCategories.length +1});
+            nameCategoryElm.value = "";
+
+            listCategories.push({name: name, id: listCategories.length + 1});
+        }
         refreshCategories();
     })
 }
@@ -94,74 +95,3 @@ function deleteCategory(id) {
     }
     refreshCategories();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// class Categories {
-//     constructor(){
-//         this.listCategories = [
-//             {
-//                 "id": 1,
-//                 "name": "Favorite"
-//             },{
-//                 "id": 2,
-//                 "name": "Job"
-//             },{
-//                 "id": 3,
-//                 "name": "Films"
-//             },{
-//                 "id": 4,
-//                 "name": "Fun"
-//             },{
-//                 "id": 5,
-//                 "name": "TODO"
-//             },{
-//                 "id": 6,
-//                 "name": "Other"
-//             }
-//         ];
-//     }
-//
-//     add(category){
-//         let obj = Object.assign({}, category, {id: this.listCategories.length + 1});
-//
-//         this.listCategories.push(obj);
-//         return obj;
-//     }
-//
-//     remove(id){
-//         let current = this.listCategories;
-//
-//         for (let i = 0; i < current.length; i++){
-//             if (current[i].id === id)
-//                 current.splice(i, 1);
-//         }
-//         this.list();
-//     }
-//
-//     list(){
-//         return this.listCategories;
-//     }
-// }
