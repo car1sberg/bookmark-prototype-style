@@ -46,9 +46,9 @@ function addCategoryForm() {
             <form id="addCategory" class="collapse">
                 <div class="form-group">
                     <label for="addCategoryName">Category Name</label>
-                    <input id="addCategoryName" type="text" class="form-control" name="nameCategory" required>
+                    <input id="addCategoryName" type="text" class="form-control" name="nameCategory" maxlength="20" required>
                 </div>
-                <button class="btn btn-primary saveCategory" type="submit">Save</button>
+                <button class="btn btn-primary saveCategory" type="button">Save</button>
                 <button class="btn btn-danger cancelCategory" type="button" data-toggle="collapse" data-target="#addCategory">Cancel</button>
             </form>`;
 }
@@ -59,11 +59,12 @@ function initListener() {
     addCategoryBtn.addEventListener('click', function (elem) {
         const categoryForm= document.querySelector('#addCategory');
         const nameCategoryElm = categoryForm.querySelector('input[name="nameCategory"]');
-        const name = nameCategoryElm.value;
-        const inputValue = nameCategoryElm.value;
-        const newValue = inputValue.trim();
+        // const name = nameCategoryElm.value;
+        let inputValue = nameCategoryElm.value;
+        let newValue = inputValue.trim();
 
         if (newValue.length === 0){
+            nameCategoryElm.value = "";
             alert('Enter a category name');
         }
         else {
@@ -71,7 +72,7 @@ function initListener() {
 
             nameCategoryElm.value = "";
 
-            listCategories.push({name: name, id: listCategories.length + 1});
+            listCategories.push({name: newValue, id: listCategories.length + 1});
         }
         refreshCategories();
     })

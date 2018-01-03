@@ -81,11 +81,11 @@ function addBookmarkForm() {
                             <form id="addBookmarkForm">
                                 <div class="form-group cancelForm">
                                     <label for="BkmName">Bookmark Name</label>
-                                    <input id="BkmName" type="text" class="form-control addBookmarkName" placeholder="required">
+                                    <input id="BkmName" type="text" class="form-control addBookmarkName" placeholder="required" maxlength="30">
                                 </div>
                                 <div class="form-group">
                                     <label for="BkmLink">Bookmark Link</label>
-                                    <input id="BkmLink" type="text" class="form-control addBookmarkLink" placeholder="required">
+                                    <input id="BkmLink" type="text" class="form-control addBookmarkLink" placeholder="required" maxlength="30">
                                 </div>
                                 <div class="form-group">
                                     <label for="Descr">The Description</label>
@@ -158,17 +158,24 @@ function onAddNewBookmark() {
     let nameElem = addBookmark.querySelector('.addBookmarkName');
     let linkElem = addBookmark.querySelector('.addBookmarkLink');
     let descriptionElem = addBookmark.querySelector('.addBookmarkDescription');
-    let name = nameElem.value;
-    let link = linkElem.value;
+    // let name = nameElem.value;
+    // let link = linkElem.value;
     let description = descriptionElem.value;
+    let name = nameElem.value.trim();
+    let link= linkElem.value.trim();
 
     if (name.length === 0) {
+        nameElem.value = "";
         alert('Enter a bookmark name');
     }
     else if (link.length === 0) {
+        linkElem.value = "";
         alert('Enter a bookmark link');
     }
     else {
+        nameElem.value = "";
+        linkElem.value = "";
+        descriptionElem.value = "";
         hideModal();
         myData.push({id: myData.length.toString(), name: name, link: link, description: description});
     }
@@ -191,10 +198,3 @@ function onDeleteBookmark(id) {
     }
     getBookmarksList();
 }
-
-//   TODO: there is a bug with a long category name;
-//   TODO: issue with gaps in input fields; / tried to fix it, but the page is reloading now after accepting alert window.
-//   TODO: max 15 symbols for the category name and ~25 for the bookmark name
-
-
-
