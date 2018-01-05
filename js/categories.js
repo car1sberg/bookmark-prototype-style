@@ -7,6 +7,30 @@
     });
 } ());
 
+function generateCategoryTemplate(category) {
+    return `<button type="button" class="list-group-item" attr-id="${category.id}">
+        ${category.name}
+        <a>
+            <span id="categoryID" class="glyphicon glyphicon-remove close" onclick="deleteCategory(${category.id})"></span>
+        </a>
+    </button>`;
+}
+
+function addCategoryForm() {
+    return `<button class="btn btn-primary" id="addCategoryBtn" data-toggle="collapse" data-target="#addCategory">Add Category</button>
+            <form id="addCategory" class="collapse">
+                <div class="form-group">
+                    <label for="addCategoryName">Category Name</label>
+                    <input id="addCategoryName" type="text" class="form-control" name="nameCategory" maxlength="20" required>
+                </div>
+                <button class="btn btn-primary saveCategory" type="button">Save</button>
+                <button class="btn btn-danger cancelCategory" type="button" data-toggle="collapse" data-target="#addCategory">Cancel</button>
+            </form>`;
+}
+
+function refreshCategories() {
+    document.getElementById('categoriesView').innerHTML = listCategories.map(item => generateCategoryTemplate(item)).join('');
+}
 
 const listCategories = [
     {
@@ -29,29 +53,6 @@ const listCategories = [
         "name": "Other"
     }
 ];
-
-// GENERATING TEMPLATE FOR CATEGORIES
-function generateCategoryTemplate(category) {
-    return `<button type="button" class="list-group-item" attr-id="${category.id}">
-        ${category.name}
-        <a>
-            <span id="categoryID" class="glyphicon glyphicon-remove close" onclick="deleteCategory(${category.id})"></span>
-        </a>
-    </button>`;
-}
-
-    // Adding Form
-function addCategoryForm() {
-    return `<button class="btn btn-primary" id="addCategoryBtn" data-toggle="collapse" data-target="#addCategory">Add Category</button>
-            <form id="addCategory" class="collapse">
-                <div class="form-group">
-                    <label for="addCategoryName">Category Name</label>
-                    <input id="addCategoryName" type="text" class="form-control" name="nameCategory" maxlength="20" required>
-                </div>
-                <button class="btn btn-primary saveCategory" type="button">Save</button>
-                <button class="btn btn-danger cancelCategory" type="button" data-toggle="collapse" data-target="#addCategory">Cancel</button>
-            </form>`;
-}
 
 function initListener() {
     const addCategoryBtn = document.getElementsByClassName('saveCategory')[0];
@@ -78,11 +79,6 @@ function initListener() {
     })
 }
 
-function refreshCategories() {
-    document.getElementById('categoriesView').innerHTML = listCategories.map(item => generateCategoryTemplate(item)).join('');
-}
-
-// Deleting a category
 function deleteCategory(id) {
     let confirmStatus;
 

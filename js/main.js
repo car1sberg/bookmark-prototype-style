@@ -1,43 +1,3 @@
-// let myData = JSON.parse(dataFromJson);
-
-let myData = [
-    {
-        "id": "0",
-        "name": "Google",
-        "link": "https://www.google.com",
-        "description": "I love it"
-    },
-    {
-        "id": "1",
-        "name": "Facebook",
-        "link": "https://www.facebook.com",
-        "description": "I love it"
-    },
-    {
-        "id": "2",
-        "name": "Twitter",
-        "link": "https://www.twitter.com",
-        "description": "I love it"
-    },
-    {
-        "id": "3",
-        "name": "Youtube",
-        "link": "https://www.youtube.com",
-        "description": "I love it"
-    }
-];
-// let myData = [];
-
-// Add a list
-$(document).ready(function () {
-    // $.get('app/bookmarks.php', function (data) {
-    //    console.log(data);
-    //     myData = data;
-    // });
-    getBookmarksList();
-});
-
-
 
 function generateTemplateItem(bookmark) {
     return `<div class="container wholeForm">
@@ -106,9 +66,37 @@ function addBookmarkForm() {
 
 document.getElementById('bookmarkForm').innerHTML = addBookmarkForm();
 
+let myData = [
+    {
+        "id": "0",
+        "name": "Google",
+        "link": "https://www.google.com",
+        "description": "I love it"
+    },
+    {
+        "id": "1",
+        "name": "Facebook",
+        "link": "https://www.facebook.com",
+        "description": "I love it"
+    },
+    {
+        "id": "2",
+        "name": "Twitter",
+        "link": "https://www.twitter.com",
+        "description": "I love it"
+    },
+    {
+        "id": "3",
+        "name": "Youtube",
+        "link": "https://www.youtube.com",
+        "description": "I love it"
+    }
+];
 
+$(document).ready(function () {
+    getBookmarksList();
+});
 
-// Updating a bookmark
 function onUpdate(id) {
     let form = document.getElementById(`collapse${id}`);
     let nameElem = form.querySelector('.updateBookmarkName');
@@ -129,7 +117,6 @@ function onUpdate(id) {
     getBookmarksList();
 }
 
-    // Close other opened bookmarks if edit is pressed
 function switchToUpdate() {
     let panelsCollapse = document.getElementsByClassName('collapse');
 
@@ -152,14 +139,11 @@ function hideModal() {
     $('#myModal').modal('hide');
 }
 
-    // Add a Bookmark
 function onAddNewBookmark() {
     let addBookmark = document.getElementById('addBookmarkForm');
     let nameElem = addBookmark.querySelector('.addBookmarkName');
     let linkElem = addBookmark.querySelector('.addBookmarkLink');
     let descriptionElem = addBookmark.querySelector('.addBookmarkDescription');
-    // let name = nameElem.value;
-    // let link = linkElem.value;
     let description = descriptionElem.value;
     let name = nameElem.value.trim();
     let link= linkElem.value.trim();
@@ -182,13 +166,10 @@ function onAddNewBookmark() {
     getBookmarksList();
 }
 
-
 function getBookmarksList() {
     document.getElementById('bookmarkList').innerHTML = myData.map(item => generateTemplateItem(item)).join('');
 }
 
-
-    // Deleting a bookmark
 function onDeleteBookmark(id) {
     id = id.toString();
     for (let i = 0; i < myData.length; i++) {
