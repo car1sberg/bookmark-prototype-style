@@ -1,6 +1,6 @@
 (function () {
     $(document).ready(function () {
-        document.getElementById('categoryForm').innerHTML = addCategoryForm();
+        loadCategoryForm();
         initListener();
         refreshCategories();
 
@@ -53,6 +53,10 @@ const listCategories = [
         "name": "Other"
     }
 ];
+
+function loadCategoryForm() {
+    document.getElementById('categoryForm').innerHTML = addCategoryForm();
+}
 
 function initListener() {
     const addCategoryBtn = document.getElementsByClassName('saveCategory')[0];
