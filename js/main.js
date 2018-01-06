@@ -1,4 +1,17 @@
 
+function templateTitleAndSearch() {
+    return `<div class="row headerInfo">
+                <div class="col-md-4">
+                    <h3>Bookmark Manager</h3>
+                </div>
+                <div class="col-md-8 searchField">
+                    <input class="form-control" type="text" id="myInput" onkeyup="onSearch()" 
+                    placeholder="Search bookmarks..">
+                    <button class="btn clearSearchFieldBtn" onclick="clearSearchField()">Clear Up</button>
+                </div>
+            </div>`
+}
+
 function generateTemplateItem(bookmark) {
     return `<div class="container wholeForm">
                    <div class="panel-group">
@@ -94,8 +107,38 @@ let myData = [
 ];
 
 $(document).ready(function () {
+    loadHeaderForm();
     getBookmarksList();
 });
+
+function getBookmarksList() {
+    document.getElementById('bookmarkList').innerHTML = myData.map(item => generateTemplateItem(item)).join('');
+}
+
+function loadHeaderForm() {
+    document.getElementById('title').innerHTML = templateTitleAndSearch();
+}
+
+function clearSearchField() {
+    document.getElementById('myInput').value = "";
+    getBookmarksList();
+}
+
+function onSearch() {
+    let input = document.getElementById("myInput");
+    let filter = input.value.toUpperCase();
+    let panelDefault = document.getElementById("bookmarkList");
+    let wholeForm = panelDefault.getElementsByClassName('wholeForm');
+
+    for (let i = 0; i < wholeForm.length; i++) {
+        let bookmarkName = wholeForm[i].getElementsByTagName("a")[0];
+        if (bookmarkName.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            wholeForm[i].style.display = "";
+        } else {
+            wholeForm[i].style.display = "none";
+        }
+    }
+}
 
 function onUpdate(id) {
     let form = document.getElementById(`collapse${id}`);
@@ -164,10 +207,6 @@ function onAddNewBookmark() {
         myData.push({id: myData.length.toString(), name: name, link: link, description: description});
     }
     getBookmarksList();
-}
-
-function getBookmarksList() {
-    document.getElementById('bookmarkList').innerHTML = myData.map(item => generateTemplateItem(item)).join('');
 }
 
 function onDeleteBookmark(id) {
