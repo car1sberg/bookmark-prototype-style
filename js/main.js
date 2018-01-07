@@ -87,11 +87,11 @@ let myData = [];
 
 $.get('app/bookmarks.php', function (data) {
     myData = data.bookmarks.map(item => item);
+    getBookmarksList(myData);
 });
 
 $(document).ready(function () {
     loadHeaderForm();
-    getBookmarksList(myData);
 });
 
 function getBookmarksList(data) {

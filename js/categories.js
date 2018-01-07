@@ -2,8 +2,6 @@
     $(document).ready(function () {
         loadCategoryForm();
         initListener();
-        refreshCategories(listCategories);
-
     });
 } ());
 
@@ -31,6 +29,7 @@ function addCategoryForm() {
 let listCategories = [];
 $.get('app/categories.php', function (data) {
     listCategories = data.categories.map(item => item);
+    refreshCategories(listCategories);
 });
 
 function loadCategoryForm() {
