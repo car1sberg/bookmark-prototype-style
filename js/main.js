@@ -60,10 +60,15 @@ function addBookmarkForm() {
                                     <label for="BkmLink">Bookmark Link</label>
                                     <input id="BkmLink" type="text" class="form-control addBookmarkLink" placeholder="required" maxlength="30">
                                 </div>
-                                <!--<div class="form-group">-->
-                                    <!--<label for="Descr">The Description</label>-->
-                                    <!--<textarea id="Descr" type="text" class="form-control addBookmarkDescription"></textarea>-->
-                                <!--</div>-->
+                                <label for="sel1">Choose a category</label>
+                                <select class="form-control" id="select">
+                                    <option>This</option>
+                                    <option>Category</option>
+                                    <option>List</option>
+                                    <option>is</option>
+                                    <option>Not</option>
+                                    <option>Working</option>
+                              </select>
                             </form>
                             <div class="modal-footer button-holder">
                                     <button class="btn btn-primary saveBookmark" onclick="onAddNewBookmark()" type="button">Save</button>

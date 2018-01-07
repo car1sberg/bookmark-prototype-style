@@ -107,7 +107,7 @@ textarea {
 }
 
 .updateBookmarkName, .updateBookmarkLink,
-.addBookmarkName, .addBookmarkLink, .addBookmarkDescription, .updateDescription {
+.addBookmarkName, .addBookmarkLink {
     width: 90%;
     margin: auto;
 }
@@ -144,6 +144,11 @@ textarea {
 
 .headerInfo {
     margin-bottom: 25px;
+}
+
+#select {
+    width: 90%;
+    margin: auto;
 }
 
 #form {
@@ -291,10 +296,10 @@ button.list-group-item {
     .panel-default {
         width: 100%;
     }
-    .updateBookmarkName, .updateBookmarkLink, .updateDescription {
+    .updateBookmarkName, .updateBookmarkLink {
         width: 100%;
     }
-    .addBookmarkName, .addBookmarkLink, .addBookmarkDescription {
+    .addBookmarkName, .addBookmarkLink {
         width: 100%;
     }
 
