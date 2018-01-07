@@ -27,7 +27,7 @@ function generateTemplateItem(bookmark) {
                                <ul class="list-group" id="inputValues">
                                    <li class="list-group-item"><input class="form-control updateBookmarkName" type="text" value="${bookmark.name}"></li>
                                    <li class="list-group-item"><input class="form-control updateBookmarkLink" type="text" value="${bookmark.link}"></li>
-                                   <li class="list-group-item"><textarea class="form-control updateDescription">${bookmark.description}</textarea></li>
+                                   <!--<li class="list-group-item"><textarea class="form-control updateDescription">${bookmark.description}</textarea></li>-->
                                </ul>
                                <button class="btn btn-primary updateButton" onclick="onUpdate(${bookmark.id})">Update</button>
                                <button class="btn btn-danger cancelButton" data-toggle="collapse" href="#collapse${bookmark.id}">Cancel</button>
@@ -60,10 +60,10 @@ function addBookmarkForm() {
                                     <label for="BkmLink">Bookmark Link</label>
                                     <input id="BkmLink" type="text" class="form-control addBookmarkLink" placeholder="required" maxlength="30">
                                 </div>
-                                <div class="form-group">
-                                    <label for="Descr">The Description</label>
-                                    <textarea id="Descr" type="text" class="form-control addBookmarkDescription"></textarea>
-                                </div>
+                                <!--<div class="form-group">-->
+                                    <!--<label for="Descr">The Description</label>-->
+                                    <!--<textarea id="Descr" type="text" class="form-control addBookmarkDescription"></textarea>-->
+                                <!--</div>-->
                             </form>
                             <div class="modal-footer button-holder">
                                     <button class="btn btn-primary saveBookmark" onclick="onAddNewBookmark()" type="button">Save</button>
@@ -79,40 +79,45 @@ function addBookmarkForm() {
 
 document.getElementById('bookmarkForm').innerHTML = addBookmarkForm();
 
-let myData = [
-    {
-        "id": "0",
-        "name": "Google",
-        "link": "https://www.google.com",
-        "description": "I love it"
-    },
-    {
-        "id": "1",
-        "name": "Facebook",
-        "link": "https://www.facebook.com",
-        "description": "I love it"
-    },
-    {
-        "id": "2",
-        "name": "Twitter",
-        "link": "https://www.twitter.com",
-        "description": "I love it"
-    },
-    {
-        "id": "3",
-        "name": "Youtube",
-        "link": "https://www.youtube.com",
-        "description": "I love it"
-    }
-];
+// let myData = [
+//     {
+//         "id": "0",
+//         "name": "Google",
+//         "link": "https://www.google.com",
+//         "description": "I love it"
+//     },
+//     {
+//         "id": "1",
+//         "name": "Facebook",
+//         "link": "https://www.facebook.com",
+//         "description": "I love it"
+//     },
+//     {
+//         "id": "2",
+//         "name": "Twitter",
+//         "link": "https://www.twitter.com",
+//         "description": "I love it"
+//     },
+//     {
+//         "id": "3",
+//         "name": "Youtube",
+//         "link": "https://www.youtube.com",
+//         "description": "I love it"
+//     }
+// ];
+
+let myData = [];
+$.get('app/bookmarks.php', function (data) {
+    myData = data.bookmarks.map(item => item);
+});
 
 $(document).ready(function () {
     loadHeaderForm();
-    getBookmarksList();
+    getBookmarksList(myData);
 });
 
-function getBookmarksList() {
-    document.getElementById('bookmarkList').innerHTML = myData.map(item => generateTemplateItem(item)).join('');
+function getBookmarksList(data) {
+    document.getElementById('bookmarkList').innerHTML = data.map(item => generateTemplateItem(item)).join('');
 }
 
 function loadHeaderForm() {
@@ -121,7 +126,7 @@ function loadHeaderForm() {
 
 function clearSearchField() {
     document.getElementById('myInput').value = "";
-    getBookmarksList();
+    getBookmarksList(myData);
 }
 
 function onSearch() {
@@ -144,20 +149,12 @@ function onUpdate(id) {
     let form = document.getElementById(`collapse${id}`);
     let nameElem = form.querySelector('.updateBookmarkName');
     let linkElem = form.querySelector('.updateBookmarkLink');
-    let descriptionElem = form.querySelector('.updateDescription');
     let name = nameElem.value;
     let link = linkElem.value;
-    let description = descriptionElem.value;
-
-    id = id.toString();
-    for (let i = 0; i < myData.length; i++) {
-        if (myData[i].id === id) {
-            myData[i].name = name;
-            myData[i].link = link;
-            myData[i].description = description;
-        }
-    }
-    getBookmarksList();
+    $.post('app/bookmarks.php', {id: id, name: name, link: link, categoryId: 1, action: 'edit'}, function(data){
+        myData = data.bookmarks.map(item => item);
+        getBookmarksList(myData);
+    });
 }
 
 function switchToUpdate() {
@@ -172,7 +169,6 @@ function switchToUpdate() {
                 delete classes[j];
                 break;
             }
-
         }
         panelsCollapse[i].className = classes.join(' ');
     }
@@ -186,8 +182,6 @@ function onAddNewBookmark() {
     let addBookmark = document.getElementById('addBookmarkForm');
     let nameElem = addBookmark.querySelector('.addBookmarkName');
     let linkElem = addBookmark.querySelector('.addBookmarkLink');
-    let descriptionElem = addBookmark.querySelector('.addBookmarkDescription');
-    let description = descriptionElem.value;
     let name = nameElem.value.trim();
     let link= linkElem.value.trim();
 
@@ -202,19 +196,17 @@ function onAddNewBookmark() {
     else {
         nameElem.value = "";
         linkElem.value = "";
-        descriptionElem.value = "";
         hideModal();
-        myData.push({id: myData.length.toString(), name: name, link: link, description: description});
+        $.post('app/bookmarks.php', {name: name, link: link, categoryId: 1, action: 'add'}, function(data){
+            myData = data.bookmarks.map(item => item);
+            getBookmarksList(myData);
+        });
     }
-    getBookmarksList();
 }
 
 function onDeleteBookmark(id) {
-    id = id.toString();
-    for (let i = 0; i < myData.length; i++) {
-        if (myData[i].id === id) {
-            myData.splice(i, 1);
-        }
-    }
-    getBookmarksList();
+    $.post('app/bookmarks.php', {id: id, action: 'delete'}, function(data){
+        myData = data.bookmarks.map(item => item);
+        getBookmarksList(myData);
+    });
 }
