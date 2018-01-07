@@ -2,7 +2,7 @@
     $(document).ready(function () {
         loadCategoryForm();
         initListener();
-        refreshCategories();
+        refreshCategories(listCategories);
 
     });
 } ());
@@ -28,43 +28,25 @@ function addCategoryForm() {
             </form>`;
 }
 
-function refreshCategories() {
-    document.getElementById('categoriesView').innerHTML = listCategories.map(item => generateCategoryTemplate(item)).join('');
-}
-
-const listCategories = [
-    {
-        "id": 1,
-        "name": "Favorite"
-    }, {
-        "id": 2,
-        "name": "Job"
-    }, {
-        "id": 3,
-        "name": "Films"
-    }, {
-        "id": 4,
-        "name": "Fun"
-    }, {
-        "id": 5,
-        "name": "TODO"
-    }, {
-        "id": 6,
-        "name": "Other"
-    }
-];
+let listCategories = [];
+$.get('app/categories.php', function (data) {
+    listCategories = data.categories.map(item => item);
+});
 
 function loadCategoryForm() {
     document.getElementById('categoryForm').innerHTML = addCategoryForm();
 }
 
+function refreshCategories(data) {
+    document.getElementById('categoriesView').innerHTML = data.map(item => generateCategoryTemplate(item)).join('');
+}
+
 function initListener() {
     const addCategoryBtn = document.getElementsByClassName('saveCategory')[0];
 
-    addCategoryBtn.addEventListener('click', function (elem) {
+    addCategoryBtn.addEventListener('click', function () {
         const categoryForm= document.querySelector('#addCategory');
         const nameCategoryElm = categoryForm.querySelector('input[name="nameCategory"]');
-        // const name = nameCategoryElm.value;
         let inputValue = nameCategoryElm.value;
         let newValue = inputValue.trim();
 
@@ -74,25 +56,23 @@ function initListener() {
         }
         else {
             categoryForm.classList.remove('in');
-
             nameCategoryElm.value = "";
 
-            listCategories.push({name: newValue, id: listCategories.length + 1});
+            $.post('app/categories.php', {name: newValue, action: 'add'}, function(data){
+                listCategories = data.categories.map(item => item);
+                refreshCategories(listCategories);
+            });
         }
-        refreshCategories();
-    })
+    });
 }
 
 function deleteCategory(id) {
-    let confirmStatus;
-
-    for (let i = 0; i < listCategories.length; i++) {
-        if (listCategories[i].id === id) {
-            confirmStatus = confirm('It will delete the category, including all its bookmarks.');
-            if (confirmStatus){
-                listCategories.splice(i, 1);
-            }
-        }
+    let confirmStatus = confirm('It will delete the category, including all its bookmarks.');
+    if (confirmStatus) {
+        $.post('app/categories.php', {id: id, action: 'delete'}, function (data) {
+            listCategories = data.categories.map(item => item);
+            refreshCategories(listCategories);
+        });
     }
-    refreshCategories();
 }
+

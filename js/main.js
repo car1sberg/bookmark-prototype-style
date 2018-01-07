@@ -79,34 +79,8 @@ function addBookmarkForm() {
 
 document.getElementById('bookmarkForm').innerHTML = addBookmarkForm();
 
-// let myData = [
-//     {
-//         "id": "0",
-//         "name": "Google",
-//         "link": "https://www.google.com",
-//         "description": "I love it"
-//     },
-//     {
-//         "id": "1",
-//         "name": "Facebook",
-//         "link": "https://www.facebook.com",
-//         "description": "I love it"
-//     },
-//     {
-//         "id": "2",
-//         "name": "Twitter",
-//         "link": "https://www.twitter.com",
-//         "description": "I love it"
-//     },
-//     {
-//         "id": "3",
-//         "name": "Youtube",
-//         "link": "https://www.youtube.com",
-//         "description": "I love it"
-//     }
-// ];
-
 let myData = [];
+
 $.get('app/bookmarks.php', function (data) {
     myData = data.bookmarks.map(item => item);
 });
@@ -151,7 +125,7 @@ function onUpdate(id) {
     let linkElem = form.querySelector('.updateBookmarkLink');
     let name = nameElem.value;
     let link = linkElem.value;
-    $.post('app/bookmarks.php', {id: id, name: name, link: link, categoryId: 1, action: 'edit'}, function(data){
+    $.post('app/bookmarks.php', {id: id, name: name, link: link, categoryid: '1', action: 'edit'}, function(data){
         myData = data.bookmarks.map(item => item);
         getBookmarksList(myData);
     });
@@ -197,7 +171,7 @@ function onAddNewBookmark() {
         nameElem.value = "";
         linkElem.value = "";
         hideModal();
-        $.post('app/bookmarks.php', {name: name, link: link, categoryId: 1, action: 'add'}, function(data){
+        $.post('app/bookmarks.php', {name: name, link: link, categoryid: '1', action: 'add'}, function(data){
             myData = data.bookmarks.map(item => item);
             getBookmarksList(myData);
         });
