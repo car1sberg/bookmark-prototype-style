@@ -27,7 +27,6 @@ function generateTemplateItem(bookmark) {
                                <ul class="list-group" id="inputValues">
                                    <li class="list-group-item"><input class="form-control updateBookmarkName" type="text" value="${bookmark.name}"></li>
                                    <li class="list-group-item"><input class="form-control updateBookmarkLink" type="text" value="${bookmark.link}"></li>
-                                   <!--<li class="list-group-item"><textarea class="form-control updateDescription">${bookmark.description}</textarea></li>-->
                                </ul>
                                <button class="btn btn-primary updateButton" onclick="onUpdate(${bookmark.id})">Update</button>
                                <button class="btn btn-danger cancelButton" data-toggle="collapse" href="#collapse${bookmark.id}">Cancel</button>

@@ -1,9 +1,9 @@
 <?php
     //file with db parameters and connect routine
-    $db_name="bookmarks";
+    $db_name="id4113480_c9";
     $db_hostname="localhost";
-    $db_username="root";
-    $db_password="8068843289Deep";
+    $db_username="id4113480_ersteniuk";
+    $db_password="8068843289";
     $db_connect=mysqli_connect($db_hostname, $db_username, $db_password, $db_name);
     if (!$db_connect) {
         echo "Error: Unable to connect to MySQL." . PHP_EOL;
