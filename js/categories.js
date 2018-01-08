@@ -6,7 +6,7 @@
 } ());
 
 function generateCategoryTemplate(category) {
-    return `<button type="button" class="list-group-item" attr-id="${category.id}">
+    return `<button type="button" class="list-group-item activeCategory" onclick="activeCategory(${category.id})">
         ${category.name}
         <a>
             <span id="categoryID" class="glyphicon glyphicon-remove close" onclick="deleteCategory(${category.id})"></span>
@@ -25,6 +25,18 @@ function addCategoryForm() {
                 <button class="btn btn-danger cancelCategory" type="button" data-toggle="collapse" data-target="#addCategory">Cancel</button>
             </form>`;
 }
+
+function activeCategory(id) {
+    let newArr = [];
+
+    for (let item of myData){
+        if (item.categoryid == id){
+            newArr = newArr.concat(item);
+        }
+    }
+    getBookmarksList(newArr);
+}
+
 
 let listCategories = [];
 $.get('app/categories.php', function (data) {
