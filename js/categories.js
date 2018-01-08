@@ -60,6 +60,7 @@ function initListener() {
             $.post('app/categories.php', {name: newValue, action: 'add'}, function(data){
                 listCategories = data.categories.map(item => item);
                 refreshCategories(listCategories);
+                refreshSelectList(listCategories);
             });
         }
     });

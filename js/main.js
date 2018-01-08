@@ -59,15 +59,10 @@ function addBookmarkForm() {
                                     <label for="BkmLink">Bookmark Link</label>
                                     <input id="BkmLink" type="text" class="form-control addBookmarkLink" placeholder="required" maxlength="30">
                                 </div>
-                                <label for="sel1">Choose a category</label>
-                                <select class="form-control" id="select">
-                                    <option>This</option>
-                                    <option>Category</option>
-                                    <option>List</option>
-                                    <option>is</option>
-                                    <option>Not</option>
-                                    <option>Working</option>
-                              </select>
+                                <div class="form-group">
+                                    <label for="select">Choose a category</label>
+                                    <select class="form-control" id="select"></select>
+                                </div>
                             </form>
                             <div class="modal-footer button-holder">
                                     <button class="btn btn-primary saveBookmark" onclick="onAddNewBookmark()" type="button">Save</button>
@@ -80,6 +75,20 @@ function addBookmarkForm() {
         </div>
     </div>`;
 }
+
+function createSelectForm(category) {
+    return `<option value="${category.id}">${category.name}</option>`
+}
+
+function refreshSelectList(data) {
+    document.getElementById('select').innerHTML = data.map(item => createSelectForm(item)).join('');
+}
+
+$.get('app/categories.php', function (data) {
+    listCategories = data.categories.map(item => item);
+    refreshSelectList(listCategories);
+});
+// $('#select').find('option:checked').val();
 
 document.getElementById('bookmarkForm').innerHTML = addBookmarkForm();
 
@@ -162,6 +171,7 @@ function onAddNewBookmark() {
     let linkElem = addBookmark.querySelector('.addBookmarkLink');
     let name = nameElem.value.trim();
     let link= linkElem.value.trim();
+    let categoryId = $('#select').find('option:checked').val();
 
     if (name.length === 0) {
         nameElem.value = "";
@@ -175,7 +185,7 @@ function onAddNewBookmark() {
         nameElem.value = "";
         linkElem.value = "";
         hideModal();
-        $.post('app/bookmarks.php', {name: name, link: link, categoryid: '1', action: 'add'}, function(data){
+        $.post('app/bookmarks.php', {name: name, link: link, categoryid: categoryId, action: 'add'}, function(data){
             myData = data.bookmarks.map(item => item);
             getBookmarksList(myData);
         });
