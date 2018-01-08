@@ -1,3 +1,6 @@
+$(document).ready(function () {
+    loadHeaderForm();
+});
 
 function templateTitleAndSearch() {
     return `<div class="row headerInfo">
@@ -13,7 +16,7 @@ function templateTitleAndSearch() {
 }
 
 function generateTemplateItem(bookmark) {
-    return `<div class="container wholeForm">
+    return `<div class="container wholeForm" id="emptyCategory">
                    <div class="panel-group">
                       <div class="panel panel-default">
                            <div class="panel-heading">
@@ -88,7 +91,6 @@ $.get('app/categories.php', function (data) {
     listCategories = data.categories.map(item => item);
     refreshSelectList(listCategories);
 });
-// $('#select').find('option:checked').val();
 
 document.getElementById('bookmarkForm').innerHTML = addBookmarkForm();
 
@@ -97,10 +99,6 @@ let myData = [];
 $.get('app/bookmarks.php', function (data) {
     myData = data.bookmarks.map(item => item);
     getBookmarksList(myData);
-});
-
-$(document).ready(function () {
-    loadHeaderForm();
 });
 
 function getBookmarksList(data) {

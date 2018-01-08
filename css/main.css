@@ -265,6 +265,10 @@ button.list-group-item {
         width: 75%;
     }
 
+    #select {
+        width: 75%;
+    }
+
     .glyphicon-pencil {
         float: left;
     }
@@ -296,6 +300,11 @@ button.list-group-item {
     .panel-default {
         width: 100%;
     }
+
+    #select {
+        width: 100%;
+    }
+
     .updateBookmarkName, .updateBookmarkLink {
         width: 100%;
     }

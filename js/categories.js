@@ -37,7 +37,6 @@ function activeCategory(id) {
     getBookmarksList(newArr);
 }
 
-
 let listCategories = [];
 $.get('app/categories.php', function (data) {
     listCategories = data.categories.map(item => item);
@@ -58,6 +57,7 @@ function initListener() {
     addCategoryBtn.addEventListener('click', function () {
         const categoryForm= document.querySelector('#addCategory');
         const nameCategoryElm = categoryForm.querySelector('input[name="nameCategory"]');
+
         let inputValue = nameCategoryElm.value;
         let newValue = inputValue.trim();
 
@@ -80,6 +80,7 @@ function initListener() {
 
 function deleteCategory(id) {
     let confirmStatus = confirm('It will delete the category, including all its bookmarks.');
+
     if (confirmStatus) {
         $.post('app/categories.php', {id: id, action: 'delete'}, function (data) {
             listCategories = data.categories.map(item => item);
