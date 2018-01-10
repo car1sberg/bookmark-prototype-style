@@ -85,6 +85,7 @@ function deleteCategory(id) {
         $.post('app/categories.php', {id: id, action: 'delete'}, function (data) {
             listCategories = data.categories.map(item => item);
             refreshCategories(listCategories);
+            refreshSelectList(listCategories);
         });
     }
 }
