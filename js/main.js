@@ -110,8 +110,13 @@ function loadHeaderForm() {
 }
 
 function clearSearchField() {
-    document.getElementById('myInput').value = "";
-    getBookmarksList(myData);
+    let userValue = document.getElementById('myInput');
+
+    if (userValue.value !== ""){
+        userValue.value = "";
+        getBookmarksList(myData);
+    }
+
 }
 
 function onSearch() {

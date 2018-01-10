@@ -79,7 +79,7 @@ function initListener() {
 }
 
 function deleteCategory(id) {
-    let confirmStatus = confirm('It will delete the category, including all its bookmarks.');
+    let confirmStatus = confirm('It will delete the category, press "Yes" to continue');
 
     if (confirmStatus) {
         $.post('app/categories.php', {id: id, action: 'delete'}, function (data) {
