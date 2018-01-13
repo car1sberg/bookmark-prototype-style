@@ -101,6 +101,10 @@ textarea {
     display: flex;
 }
 
+#copyright {
+    font-size: small;
+    color: grey;
+}
 
 .panel-default>.panel-heading {
     text-align: center;
